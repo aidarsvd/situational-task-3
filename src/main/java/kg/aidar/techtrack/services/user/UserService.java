@@ -7,6 +7,8 @@ import kg.aidar.techtrack.dto.SignUpUserDto;
 import kg.aidar.techtrack.dto.UserDto;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.util.List;
+
 public interface UserService extends UserDetailsService {
     void saveUser(SignUpUserDto signUpUserDto);
 
@@ -17,5 +19,7 @@ public interface UserService extends UserDetailsService {
     boolean isUserExists(String username);
 
     UserDto getProfile();
+
+    List<UserDto> getUsers();
 
 }

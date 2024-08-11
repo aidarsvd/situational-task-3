@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -19,5 +20,9 @@ public class UserDto {
     String name;
 
     String username;
+
+    LocalDateTime createdAt;
+
+    List<String> authorities;
 
 }

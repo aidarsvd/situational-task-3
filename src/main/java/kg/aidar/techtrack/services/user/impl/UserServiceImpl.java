@@ -119,4 +119,9 @@ public class UserServiceImpl implements UserService {
                 .username(user.getUsername())
                 .build();
     }
+
+    @Override
+    public List<UserDto> getUsers() {
+        return userRepository.findAll().stream().map(u -> new UserDto(u.getId(), u.getName(), u.getUsername(), u.getCreatedAt(), u.getAuthorities().stream().map(UserAuthorityEntity::getName).toList())).toList();
+    }
 }

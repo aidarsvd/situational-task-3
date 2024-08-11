@@ -1,18 +1,14 @@
 package kg.aidar.techtrack.controllers;
 
 import jakarta.validation.Valid;
-import kg.aidar.techtrack.dto.AssignAuthorityDto;
-import kg.aidar.techtrack.dto.CreateUserDto;
-import kg.aidar.techtrack.dto.CreatedUserDto;
-import kg.aidar.techtrack.dto.SuccessDto;
+import kg.aidar.techtrack.dto.*;
 import kg.aidar.techtrack.services.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
@@ -33,6 +29,12 @@ public class AdminController {
     public ResponseEntity<SuccessDto> assignAuthority(@Valid @RequestBody AssignAuthorityDto assignAuthorityDto) {
         userService.assignAuthority(assignAuthorityDto.getUsername(), assignAuthorityDto.getAuthority());
         return ResponseEntity.ok(SuccessDto.builder().build());
+    }
+
+    @GetMapping("/get-users")
+    @PreAuthorize("hasAuthority('users.read')")
+    public ResponseEntity<List<UserDto>> getUsers() {
+        return ResponseEntity.ok(userService.getUsers());
     }
 
 }
