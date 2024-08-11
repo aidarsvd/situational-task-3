@@ -35,7 +35,7 @@ public class UserEntity {
 
     boolean isEnabled;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "tech_track_users_authorities",
             joinColumns = @JoinColumn(name = "user_id"),

@@ -16,5 +16,5 @@ app:
   security:
     jwt:
       secret-key: caroserie
-      access-token-life: 3600000 # 1 hour
-      refresh-token-life: 604800000 # 168 hours
+      access-token-life: 604800000
+      refresh-token-life: 1209600000

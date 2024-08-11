@@ -1,12 +1,16 @@
 package kg.aidar.techtrack.services.user.impl;
 
 
+import kg.aidar.techtrack.dto.CreateUserDto;
+import kg.aidar.techtrack.dto.CreatedUserDto;
 import kg.aidar.techtrack.dto.SignUpUserDto;
 import kg.aidar.techtrack.dto.UserDto;
+import kg.aidar.techtrack.entities.UserAuthorityEntity;
 import kg.aidar.techtrack.entities.UserEntity;
 import kg.aidar.techtrack.exceptions.ApiException;
 import kg.aidar.techtrack.models.AppUserDetails;
 import kg.aidar.techtrack.models.AuthorityModel;
+import kg.aidar.techtrack.repositories.AuthorityRepository;
 import kg.aidar.techtrack.repositories.UserRepository;
 import kg.aidar.techtrack.services.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +24,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -27,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
+    private final AuthorityRepository authorityRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -62,6 +70,35 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             log.error("Unknown exception when user saving", e);
             throw new ApiException(e);
+        }
+    }
+
+    @Override
+    public CreatedUserDto saveUser(CreateUserDto createUserDto) {
+        List<UserAuthorityEntity> defaultAuthorities = authorityRepository.findAllByNameIn(List.of("equipment.create", "equipment.read"));
+        String password = UUID.randomUUID().toString().substring(0, 8);
+        log.info("Create user: {}", createUserDto.getUsername());
+        UserEntity userEntity = new UserEntity();
+        userEntity.setName(createUserDto.getName());
+        userEntity.setUsername(createUserDto.getUsername());
+        userEntity.setPassword(passwordEncoder.encode(password));
+        userEntity.setEnabled(true);
+        userEntity.setAuthorities(defaultAuthorities);
+        userRepository.save(userEntity);
+        return CreatedUserDto.builder()
+                .username(userEntity.getUsername())
+                .password(password)
+                .build();
+    }
+
+    @Override
+    public void assignAuthority(String username, String authority) {
+        Optional<UserEntity> userToAssign = userRepository.findByUsername(username);
+        Optional<UserAuthorityEntity> authorityToAssign = authorityRepository.findByName(authority);
+        if (userToAssign.isPresent() && authorityToAssign.isPresent()) {
+            UserEntity userEntity = userToAssign.get();
+            userEntity.getAuthorities().add(authorityToAssign.get());
+            userRepository.save(userEntity);
         }
     }
 
