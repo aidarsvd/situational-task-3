@@ -7,6 +7,7 @@ import kg.aidar.techtrack.enums.JwtServiceChannel;
 import kg.aidar.techtrack.exceptions.ApiException;
 import kg.aidar.techtrack.factories.JwtServiceFactory;
 import kg.aidar.techtrack.services.security.SecurityService;
+import kg.aidar.techtrack.services.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,10 +24,14 @@ public class SecurityServiceImpl implements SecurityService {
 
     private final AuthenticationManager authenticationManager;
     private final JwtServiceFactory jwtServiceFactory;
+    private final UserService userService;
 
     @Override
     public AuthorizedUserDto authorizeUser(AuthorizeUserDto authorizeUserDto) {
         log.info("Authorizing user {}", authorizeUserDto.getUsername());
+        if (!userService.isUserEnabled(authorizeUserDto.getUsername())) {
+            throw new RuntimeException("User is disabled " + authorizeUserDto.getUsername());
+        }
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authorizeUserDto.getUsername(), authorizeUserDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authenticate);
         String accessToken = jwtServiceFactory.defineJwtService(JwtServiceChannel.ACCESS).generateJwtToken(authorizeUserDto.getUsername());

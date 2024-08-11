@@ -102,26 +102,35 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
-    @Override
-    public boolean isUserExists(String username) {
-        return userRepository.existsByUsername(username);
-    }
-
-    @Override
-    public UserDto getProfile() {
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-        UserEntity user = userRepository.findByUsername(((AppUserDetails) authentication.getPrincipal()).getUsername()).orElseThrow();
-        return UserDto.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .username(user.getUsername())
-                .build();
-    }
-
     @Override
     public List<UserDto> getUsers() {
         return userRepository.findAll().stream().map(u -> new UserDto(u.getId(), u.getName(), u.getUsername(), u.getCreatedAt(), u.getAuthorities().stream().map(UserAuthorityEntity::getName).toList())).toList();
+    }
+
+    @Override
+    public void deleteUser(String username) {
+        Optional<UserEntity> userEntity = userRepository.findByUsername(username);
+        userEntity.ifPresent(entity -> {
+            entity.setEnabled(false);
+            userRepository.save(entity);
+        });
+    }
+
+    @Override
+    public boolean isUserEnabled(String username) {
+        if (userRepository.findByUsername(username).isPresent()) {
+            return userRepository.findByUsername(username).get().isEnabled();
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public void activate(String username) {
+        Optional<UserEntity> userEntity = userRepository.findByUsername(username);
+        userEntity.ifPresent(entity -> {
+            entity.setEnabled(true);
+            userRepository.save(entity);
+        });
     }
 }

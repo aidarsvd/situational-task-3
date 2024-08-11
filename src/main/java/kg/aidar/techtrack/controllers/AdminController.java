@@ -37,4 +37,18 @@ public class AdminController {
         return ResponseEntity.ok(userService.getUsers());
     }
 
+    @PostMapping("/delete-user")
+    @PreAuthorize("hasAuthority('users.delete')")
+    public ResponseEntity<SuccessDto> deleteUser(@RequestParam("username") String username) {
+        userService.deleteUser(username);
+        return ResponseEntity.ok(SuccessDto.builder().build());
+    }
+
+    @PostMapping("/activate-user")
+    @PreAuthorize("hasAuthority('users.edit')")
+    public ResponseEntity<SuccessDto> activateUser(@RequestParam("username") String username) {
+        userService.activate(username);
+        return ResponseEntity.ok(SuccessDto.builder().build());
+    }
+
 }

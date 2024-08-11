@@ -16,10 +16,11 @@ public interface UserService extends UserDetailsService {
 
     void assignAuthority(String username, String authority);
 
-    boolean isUserExists(String username);
-
-    UserDto getProfile();
-
     List<UserDto> getUsers();
 
+    void deleteUser(String username);
+
+    boolean isUserEnabled(String username);
+
+    void activate(String username);
 }
