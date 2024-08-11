@@ -1,0 +1,20 @@
+### Sign up
+POST {{host}}/trusted/auth/sign-up
+Content-Type: application/json
+
+{
+  "username": "aidarsvd",
+  "name": "Aidar Chakiev",
+  "password": "Chakiev#4"
+}
+
+
+### Sign in
+POST {{host}}/trusted/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": "aidarsvd",
+  "password": "Chakiev#4"
+}
+

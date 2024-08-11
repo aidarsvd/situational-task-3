@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 
 @Entity
 @Table(
@@ -31,5 +34,20 @@ public class UserEntity {
     String password;
 
     boolean isEnabled;
+
+    @ManyToMany
+    @JoinTable(
+            name = "tech_track_users_authorities",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id")
+    )
+    List<UserAuthorityEntity> authorities;
+
+    LocalDateTime createdAt;
+
+    @PrePersist
+    private void init() {
+        this.createdAt = LocalDateTime.now();
+    }
 
 }

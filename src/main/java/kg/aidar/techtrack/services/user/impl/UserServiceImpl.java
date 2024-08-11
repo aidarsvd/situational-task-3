@@ -1,12 +1,12 @@
 package kg.aidar.techtrack.services.user.impl;
 
 
-
 import kg.aidar.techtrack.dto.SignUpUserDto;
 import kg.aidar.techtrack.dto.UserDto;
 import kg.aidar.techtrack.entities.UserEntity;
 import kg.aidar.techtrack.exceptions.ApiException;
 import kg.aidar.techtrack.models.AppUserDetails;
+import kg.aidar.techtrack.models.AuthorityModel;
 import kg.aidar.techtrack.repositories.UserRepository;
 import kg.aidar.techtrack.services.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +31,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findUserByUsername(username)
-                .map(u -> new AppUserDetails(u.getId(), u.getUsername(), u.getName(), u.getPassword()))
+        return userRepository.findByUsername(username)
+                .map(u -> new AppUserDetails(
+                                u.getId(),
+                                u.getUsername(),
+                                u.getName(),
+                                u.getPassword(),
+                                u.getAuthorities().stream().map(a -> new AuthorityModel(a.getName(), a.getDescription())).toList(),
+                                u.isEnabled(),
+                                u.getCreatedAt()
+                        )
+                )
                 .orElseThrow(() -> new UsernameNotFoundException(username + " not found"));
     }
 
@@ -59,14 +68,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isUserExists(String username) {
-        return userRepository.isUserAlreadyExists(username) > 0;
+        return userRepository.existsByUsername(username);
     }
 
     @Override
     public UserDto getProfile() {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
-        UserEntity user = userRepository.findUserByUsername(((AppUserDetails) authentication.getPrincipal()).getUsername()).orElseThrow();
+        UserEntity user = userRepository.findByUsername(((AppUserDetails) authentication.getPrincipal()).getUsername()).orElseThrow();
         return UserDto.builder()
                 .id(user.getId())
                 .name(user.getName())

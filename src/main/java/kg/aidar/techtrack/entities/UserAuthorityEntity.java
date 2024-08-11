@@ -24,12 +24,4 @@ public class UserAuthorityEntity {
     @Column(columnDefinition = "TEXT")
     String description;
 
-    @ManyToMany
-    @JoinTable(
-            name = "tech_track_users_authorities",
-            joinColumns = @JoinColumn(name = "authority_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    List<UserEntity> users;
-
 }
