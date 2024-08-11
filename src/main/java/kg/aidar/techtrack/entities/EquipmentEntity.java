@@ -23,4 +23,7 @@ public class EquipmentEntity {
 
     String model;
 
+    @OneToOne
+    UserEntity createdBy;
+
 }
