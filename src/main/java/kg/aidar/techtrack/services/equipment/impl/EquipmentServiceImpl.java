@@ -48,4 +48,10 @@ public class EquipmentServiceImpl implements EquipmentService {
             return equipmentRepository.findAll().stream().map(e -> new EquipmentCreatedDto(e.getId(), e.getInstallationDate(), e.getModel())).toList();
         }
     }
+
+    @Override
+    public boolean deleteEquipment(Long id) {
+        equipmentRepository.deleteById(id);
+        return true;
+    }
 }

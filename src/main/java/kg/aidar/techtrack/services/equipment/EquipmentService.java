@@ -11,4 +11,5 @@ public interface EquipmentService {
 
     List<EquipmentCreatedDto> getList(String model);
 
+    boolean deleteEquipment(Long id);
 }
