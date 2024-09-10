@@ -1,7 +1,7 @@
 # Tech Track
 
 ## YouTube video demonstration
-
+https://youtu.be/-LuRfLWOM3c
 
 The application for processing data of tech equipment
 
