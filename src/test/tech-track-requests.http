@@ -3,9 +3,9 @@ POST {{host}}/trusted/auth/sign-up
 Content-Type: application/json
 
 {
-  "username": "aidarsvd",
-  "name": "Aidar Chakiev",
-  "password": "Chakiev#4"
+  "username": "pavel_durov",
+  "name": "Pavel Durov",
+  "password": "telegram1"
 }
 
 
@@ -14,96 +14,92 @@ POST {{host}}/trusted/auth/sign-in
 Content-Type: application/json
 
 {
-  "username": "jdoe",
-  "password": "c28d7a2e"
+  "username": "aidarsvd",
+  "password": "Chakiev#4"
 }
 
 ### Create user
 POST {{host}}/admin/user-create
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaWRhcnN2ZCIsImV4cCI6MTcyMzk3ODE2MH0.GTlpaRfeaG6gV_NicGoWctxFc7Pu64-7k2mLJGDSsWE
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaWRhcnN2ZCIsImV4cCI6MTcyNjU2MjIyOH0.WWEiGO1S8rVLEUBxcDgXtnBpItQ9cgP4F3MV3w89I0I
 
 {
-  "username": "jdoe",
-  "name": "John Doe"
+  "username": "ilon_mask",
+  "name": "Ilon Mask"
 }
 
 ### Assign authority to user
 POST {{host}}/admin/assign-authority
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaWRhcnN2ZCIsImV4cCI6MTcyMzk3ODE2MH0.GTlpaRfeaG6gV_NicGoWctxFc7Pu64-7k2mLJGDSsWE
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaWRhcnN2ZCIsImV4cCI6MTcyNjU2MjIyOH0.WWEiGO1S8rVLEUBxcDgXtnBpItQ9cgP4F3MV3w89I0I
 
 {
-  "username": "jdoe",
+  "username": "ilon_mask",
   "authority": "equipment.delete"
 }
 
 ### Get user list
 GET {{host}}/admin/get-users
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaWRhcnN2ZCIsImV4cCI6MTcyMzk3ODE2MH0.GTlpaRfeaG6gV_NicGoWctxFc7Pu64-7k2mLJGDSsWE
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaWRhcnN2ZCIsImV4cCI6MTcyNjU2MjIyOH0.WWEiGO1S8rVLEUBxcDgXtnBpItQ9cgP4F3MV3w89I0I
 
 ### Deactivaye user
 POST {{host}}/admin/delete-user
 Content-Type: application/x-www-form-urlencoded
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaWRhcnN2ZCIsImV4cCI6MTcyMzk3ODE2MH0.GTlpaRfeaG6gV_NicGoWctxFc7Pu64-7k2mLJGDSsWE
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaWRhcnN2ZCIsImV4cCI6MTcyNjU2MjIyOH0.WWEiGO1S8rVLEUBxcDgXtnBpItQ9cgP4F3MV3w89I0I
 
-username = jdoe
+username = pavel_durov
 
 
 ### Activate user
 POST {{host}}/admin/activate-user
 Content-Type: application/x-www-form-urlencoded
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaWRhcnN2ZCIsImV4cCI6MTcyMzk3ODE2MH0.GTlpaRfeaG6gV_NicGoWctxFc7Pu64-7k2mLJGDSsWE
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaWRhcnN2ZCIsImV4cCI6MTcyNjU2MjIyOH0.WWEiGO1S8rVLEUBxcDgXtnBpItQ9cgP4F3MV3w89I0I
 
-username = jdoe
+username = pavel_durov
 
 ### Equipment create
 POST {{host}}/equipment/create
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaWRhcnN2ZCIsImV4cCI6MTcyMzk3ODE2MH0.GTlpaRfeaG6gV_NicGoWctxFc7Pu64-7k2mLJGDSsWE
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaWRhcnN2ZCIsImV4cCI6MTcyNjU2MjcwNH0.z32R-S0OfY9dDj9gaZ-6xVlQ1ZciQJofhZF3DPWbo9g
 
 {
-  "model": "GPS Modules"
+  "model": "Termometer AlaToo1"
 }
 
 ### Equipment get
-GET {{host}}/equipment/get-list?s=f
+GET {{host}}/equipment/get-list
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaWRhcnN2ZCIsImV4cCI6MTcyMzk3ODE2MH0.GTlpaRfeaG6gV_NicGoWctxFc7Pu64-7k2mLJGDSsWE
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpbG9uX21hc2siLCJleHAiOjE3MjY1NjI1NTF9.-EE1t_vCIQnXNrlXwnWjEh3zemLRd0aoPwBeKtbm7Zc
 
 
 ### Data submit
-POST {{host}}/data/submit
+POST {{host}}/trusted/data/submit
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqZG9lIiwiZXhwIjoxNzI1Mzc5NjE5fQ.2ixDe-t2VXDCO-IIAdBzo2ICHi7sNs99XeinFl9IZrc
 
 {
-  "rawValue": "100",
+  "rawValue": "250",
   "unit": "HV",
-  "description": "from test",
-  "equipmentId": 1
+  "description": "Data for 11.09.2024",
+  "equipmentId": 2
 }
 
 
 ### Create alert
-POST {{host}}/alert/create
+POST {{host}}/trusted/alert/create
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqZG9lIiwiZXhwIjoxNzI1Mzc5NjE5fQ.2ixDe-t2VXDCO-IIAdBzo2ICHi7sNs99XeinFl9IZrc
 
 {
-  "alertMessage": "High risk!",
-  "priority": "EXTREME_HIGH",
-  "equipmentId": 1
+  "alertMessage": "New software update is available!",
+  "priority": "MEDIUM",
+  "equipmentId": 2
 }
 
 ### Get alerts
-GET {{host}}/alert/get-all
+GET {{host}}/trusted/alert/get-all
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqZG9lIiwiZXhwIjoxNzI1Mzc5NjE5fQ.2ixDe-t2VXDCO-IIAdBzo2ICHi7sNs99XeinFl9IZrc
 
 
 ### Delete alert
-DELETE {{host}}/alert/delete/1
+DELETE {{host}}/trusted/alert/delete/2
 Content-Type: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqZG9lIiwiZXhwIjoxNzI1Mzc5NjE5fQ.2ixDe-t2VXDCO-IIAdBzo2ICHi7sNs99XeinFl9IZrc
